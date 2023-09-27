@@ -13,28 +13,24 @@ test('change ship placement on to the board', () => {
   expect(board.getShipPlacementDirection()).toBe('Vertical');
 });
 
-test('test isShipFound method for empty array', () => {
-  const board = new Gameboard();
-
-  expect(board.shipFound([])).toBeFalsy();
-});
-
-test('test isShipFound method for true and false', () => {
-  const board = new Gameboard();
-
-  expect(board.shipFound([1])).toBeTruthy();
-});
-
-test('isShipPlacementValid for 1 5 4 "Horizontal"', () => {
+test('check for ship placement at x = 1, y = 3, ship length 4 direction = "Horizontal", should return true', () => {
   const board = new Gameboard();
 
   expect(board.isShipPlacementValid(1, 3, 4, 'Horizontal')).toBeTruthy();
 });
 
-test('isShipPlacementValid for 1 5 4 "Horizontal", where ship is placed at 1 6', () => {
+test('check for ship placement at x = 1, y = 3, ship length 4 direction = "Horizontal", but ship is placed at x = 1, y = 6, should return false', () => {
   const board = new Gameboard();
 
-  board.board[1][6] = { isHit: false };
+  board.board[1][6] = { ship: true };
 
   expect(board.isShipPlacementValid(1, 3, 4, 'Horizontal')).toBeFalsy();
+});
+
+test('check for ship placement at x = 7, y = 2, ship length 4 direction = "Vertical", but ship is placed at x = 1, y = 6, should return false', () => {
+  const board = new Gameboard();
+
+  board.board[3][7] = { ship: true };
+
+  expect(board.isShipPlacementValid(7, 2, 4, 'Vertical')).toBeFalsy();
 });

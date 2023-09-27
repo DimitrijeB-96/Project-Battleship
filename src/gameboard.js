@@ -1,6 +1,7 @@
 export default class Gameboard {
   constructor() {
     this.board = [];
+    this.missShotsBoard = [];
     this.createBoard();
 
     this.placementDirection = 'Horizontal';
@@ -10,7 +11,7 @@ export default class Gameboard {
     for (let i = 0; i < 10; i++) {
       this.board[i] = [];
       for (let j = 0; j < 10; j++) {
-        this.board[i][j] = [];
+        this.board[i][j] = [{ship: false, beenHit: false}];
       }
     }
     return this.board;
@@ -24,8 +25,29 @@ export default class Gameboard {
     return this.placementDirection === 'Horizontal' ? this.placementDirection = 'Vertical' : this.placementDirection = 'Horizontal';
   }
 
-  placeShip(x, y, shipLength, direction) {
+  placeShip(ship, x, y, direction) {
+    let shipLength;
+
+    if (ship === 'Carrier') {
+      shipLength = 5;
+    } else if (ship === 'Battleship') {
+      shipLength = 4;
+    } else if (ship === 'Destroyer') {
+      shipLength = 3
+    } else if (ship === 'Submarine') {
+      shipLength = 3;
+    } else if (ship === 'Patrol Boat') {
+      shipLength = 2;
+    }
+
     const isValid = this.isShipPlacementValid(x, y, shipLength, direction);
+
+    if (isValid) {
+      // place ship
+      // use X and Y to place ship, use shipLength to span ship at the board which will depend on direction
+    } else {
+      // do something but not place ship to the board ?
+    }
   }
 
   isShipPlacementValid(x, y, shipLength, direction) {
@@ -42,12 +64,13 @@ export default class Gameboard {
 
     if (slicedArray.length >= shipLength) {
       slicedArray = slicedArray.slice(0, shipLength);
-    } 
-    // Not sure yet how to deal with ELSE
+    } else {
+      return isValid = false;
+    }
 
     const isShipFound = slicedArray.some(this.shipFound);
 
-    if (isShipFound) {
+    if (isShipFound === true) {
       isValid = false;
     } else {
       isValid = true;
@@ -57,10 +80,10 @@ export default class Gameboard {
   }
 
   shipFound(index) {
-    return index != 0 ? true : false;
+    return index.ship === true ? true : false;
   }
 
-  receiveAttack() {
+  receiveAttack(x, y) {
 
   }
 }
