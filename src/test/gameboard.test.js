@@ -1,5 +1,7 @@
 import Gameboard from "../gameboard.js";
 
+// X and Y axes are switch in arrays, example array[Y][X]...
+
 test('get ship placement on to the board', () => {
   const board = new Gameboard();
 
@@ -19,18 +21,18 @@ test('check for ship placement at x = 1, y = 3, ship length 4 direction = "Horiz
   expect(board.isShipPlacementValid(1, 3, 4, 'Horizontal')).toBeTruthy();
 });
 
-test('check for ship placement at x = 1, y = 3, ship length 4 direction = "Horizontal", but ship is placed at x = 1, y = 6, should return false', () => {
+test('check if ship can be placed at x = 1, y = 3, ship length 4 direction = "Horizontal", other ship is at placed at x = 1, y = 6, return true', () => {
   const board = new Gameboard();
 
-  board.board[1][6] = { ship: true };
+  board.board[1][6] = { isHit: false };
 
-  expect(board.isShipPlacementValid(1, 3, 4, 'Horizontal')).toBeFalsy();
+  expect(board.isShipPlacementValid(1, 3, 4, 'Horizontal')).toBeTruthy();
 });
 
-test('check for ship placement at x = 7, y = 2, ship length 4 direction = "Vertical", but ship is placed at x = 1, y = 6, should return false', () => {
+test('check for ship placement at x = 6, y = 2, ship length 4 direction = "Vertical", but ship is placed at x = 1, y = 6, should return false', () => {
   const board = new Gameboard();
 
-  board.board[3][7] = { ship: true };
+  board.board[2][7] = { isHit: false };
 
-  expect(board.isShipPlacementValid(7, 2, 4, 'Vertical')).toBeFalsy();
+  expect(board.placeShip('Battleship', 6, 2, 'Vertical')).toBeFalsy();
 });

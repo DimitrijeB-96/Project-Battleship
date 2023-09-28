@@ -1,3 +1,5 @@
+import Ship from "./ship.js";
+
 export default class Gameboard {
   constructor() {
     this.board = [];
@@ -42,11 +44,16 @@ export default class Gameboard {
 
     const isValid = this.isShipPlacementValid(x, y, shipLength, direction);
 
-    if (isValid) {
-      // place ship
-      // use X and Y to place ship, use shipLength to span ship at the board which will depend on direction
-    } else {
-      // do something but not place ship to the board ?
+    if (isValid && direction === 'Horizontal') {
+      for (let i = 0; i < shipLength; i++) {
+        this.board[y][x + i] = { isHit: false };
+      }
+    } 
+
+    if (isValid && direction === 'Vertical') {
+      for (let i = 0; i < shipLength; i++) {
+        this.board[x + i][y] = { isHit: false};
+      }
     }
   }
 
@@ -55,12 +62,12 @@ export default class Gameboard {
     let isValid = false;
 
     if (direction === 'Horizontal') {
-      slicedArray = this.board[x];
+      slicedArray = this.board[y];
+      slicedArray = slicedArray.slice(x);
     } else if (direction === 'Vertical') {
       slicedArray = this.board.map((arr) => arr[x]);
+      slicedArray = slicedArray.slice(y);
     }
-
-    slicedArray = slicedArray.slice(y);
 
     if (slicedArray.length >= shipLength) {
       slicedArray = slicedArray.slice(0, shipLength);
