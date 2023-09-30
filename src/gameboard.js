@@ -91,6 +91,15 @@ export default class Gameboard {
   }
 
   receiveAttack(x, y) {
-
+    if (this.board[y][x] === null) {
+      this.board[y][x] = 'miss';
+    } else if (this.board[y][x] === 'miss') {
+      return;
+    } else {
+      // figure out which ship it is
+      // how many times ship was hit
+      // if the ship need to be sunk
+      // if all ship are sunk GAME OVER
+    }
   }
 }

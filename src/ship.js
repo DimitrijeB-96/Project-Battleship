@@ -1,28 +1,18 @@
 export default class Ship {
   constructor(shipLength) {
     this.length = shipLength;
-    this.ship = this.createShip();
+    this.hits = 0;
   }
 
-  createShip() {
-    let ship = [];
-
-    for (let i = 0; i < this.length; i++) {
-      ship.push({ isHit: false })
-    }
-
-    return ship;
-  }
-
-  hit(index) {
-    return this.ship[index].isHit = true;
+  hit() {
+    return this.hits += 1;
   }
 
   isSunk() {
-    return this.ship.every(this.isEachShipIndexHit);
-  }
-
-  isEachShipIndexHit(index) {
-    return index.isHit == true ? true : false;
+    if (this.hits >= this.length) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
