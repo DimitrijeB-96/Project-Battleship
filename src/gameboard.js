@@ -3,7 +3,6 @@ import Ship from "./ship.js";
 export default class Gameboard {
   constructor() {
     this.board = [];
-    this.missShotsBoard = [];
     this.createBoard();
 
     this.placementDirection = 'Horizontal';
@@ -13,7 +12,7 @@ export default class Gameboard {
     for (let i = 0; i < 10; i++) {
       this.board[i] = [];
       for (let j = 0; j < 10; j++) {
-        this.board[i][j] = [{ship: false, beenHit: false}];
+        this.board[i][j] = null;
       }
     }
     return this.board;
@@ -28,31 +27,19 @@ export default class Gameboard {
   }
 
   placeShip(ship, x, y, direction) {
-    let shipLength;
-
-    if (ship === 'Carrier') {
-      shipLength = 5;
-    } else if (ship === 'Battleship') {
-      shipLength = 4;
-    } else if (ship === 'Destroyer') {
-      shipLength = 3
-    } else if (ship === 'Submarine') {
-      shipLength = 3;
-    } else if (ship === 'Patrol Boat') {
-      shipLength = 2;
-    }
+    let shipLength = ship.length;
 
     const isValid = this.isShipPlacementValid(x, y, shipLength, direction);
 
     if (isValid && direction === 'Horizontal') {
       for (let i = 0; i < shipLength; i++) {
-        this.board[y][x + i] = { isHit: false };
+        this.board[y][x + i] = ship;
       }
     } 
 
     if (isValid && direction === 'Vertical') {
       for (let i = 0; i < shipLength; i++) {
-        this.board[x + i][y] = { isHit: false};
+        this.board[y + i][x] = ship;
       }
     }
   }
@@ -87,19 +74,37 @@ export default class Gameboard {
   }
 
   shipFound(index) {
-    return index.ship === true ? true : false;
+    return index === null ? false : true;
   }
 
   receiveAttack(x, y) {
-    if (this.board[y][x] === null) {
+    const checkForShip = this.board[y][x];
+
+    if (checkForShip === null) {
       this.board[y][x] = 'miss';
-    } else if (this.board[y][x] === 'miss') {
+    } else if (checkForShip === 'miss' || checkForShip === 'hit') {
       return;
     } else {
-      // figure out which ship it is
-      // how many times ship was hit
-      // if the ship need to be sunk
-      // if all ship are sunk GAME OVER
+      checkForShip.hit();
+      this.board[y][x] = 'hit';
     }
+
+    return this.board[y][x];
+  }
+
+  areAllShipsSunk() {
+    let shipNotSunk = 0;
+
+    for (let i = 0; i < this.board.length; i++) {
+      for (let j = 0; j < this.board.length; j++)  {
+        if (this.board[i][j] !== 'hit' &&
+            this.board[i][j] !== 'miss' &&
+            this.board[i][j] !== null) {
+              shipNotSunk += 1;
+        }
+      }
+    }
+
+    return shipNotSunk === 0 ? true : false;
   }
 }
