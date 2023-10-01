@@ -9,14 +9,14 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Battleship",
+      title: 'Battleship',
     }),
   ],
   module: {
     rules: [
       {
         test: /\.jsx?$/,
-        exclude: ['node_modules'],
+        exclude: /node_modules/,
         use: ['babel-loader'],
       },
       {

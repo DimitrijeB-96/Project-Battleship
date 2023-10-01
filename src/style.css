@@ -1,0 +1,128 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  position: relative;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  display: flex; 
+  flex-direction: column;
+  
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+
+  width: 100%;
+  height: 10%;
+
+  border: 2px solid black;
+}
+
+.main-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 90%;
+
+  border: 2px solid black;
+}
+
+.black-background {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+
+  background-color: black;
+  opacity: 0.5;
+
+  z-index: 10;
+}
+
+.menu-window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+
+  height: 1000px;
+  width: 1000px;
+
+  margin-left: -500px;
+  margin-top: -500px;
+
+  left: 50%;
+  top: 50%;
+
+  background-color: white;
+  
+  z-index: 100;
+}
+
+.header-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 10%;
+  width: 100%;
+
+  border-bottom: 2px solid black;
+}
+
+.content-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 90%;
+  width: 100%;
+}
+
+.ships-list-div {
+  height: 25%;
+  width: 100%;
+
+  padding: 10px;
+}
+
+.board-menu-div {
+  display: flex;
+  justify-content: center;
+  
+  height: 75%;
+  width: 100%;
+}
+
+.grid-menu {
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
+
+  gap: 0;
+
+  height: 500px;
+  width: 500px;
+
+  border: 2px solid black;
+}
+
+.square {
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+}
+
